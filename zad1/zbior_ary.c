@@ -1,3 +1,5 @@
+// Michał Burzyński
+
 #include "zbior_ary.h"
 #include <stdlib.h>
 #include <assert.h>
