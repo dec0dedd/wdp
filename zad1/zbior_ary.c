@@ -3,7 +3,6 @@
 #include "zbior_ary.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h>
 #include <string.h>
 
 static int Q;
@@ -47,7 +46,7 @@ unsigned moc(zbior_ary A) {
 
     for (int i=0; i<A.dlugosc; ++i) {
         for (int j=0; j<A.ciag[i].dlugosc; ++j) {
-            ans += (unsigned)((A.ciag[i].przdz[j].prawy-A.ciag[i].przdz[j].lewy)/Q)+1;
+            ans += (unsigned)((A.ciag[i].przdz[j].prawy - A.ciag[i].przdz[j].lewy) / Q) + 1;
         }
     } 
     
@@ -72,71 +71,71 @@ zbior _suma(zbior A, zbior B) {
     zbior wynik;
     wynik.przdz = malloc((unsigned)(A.dlugosc+B.dlugosc)*sizeof(przedz));
 
-    int i=0, j=0, k=0;
+    int i = 0, j = 0, k = 0;
     while (i < A.dlugosc && j < B.dlugosc) {
-        przedz ac = A.przdz[i];
-        przedz bc = B.przdz[j];
+        przedz a_prz = A.przdz[i];
+        przedz b_prz = B.przdz[j];
 
-        przedz cur;
+        przedz obecny;
 
         // wybieramy przedział z lewym końcem bardziej wysuniętym na lewo
-        if (ac.lewy < bc.lewy) cur = ac, ++i;
-        else cur = bc, ++j;
+        if (a_prz.lewy < b_prz.lewy) obecny = a_prz, ++i;
+        else obecny = b_prz, ++j;
 
         if (k == 0) {
-            wynik.przdz[k++] = cur;
+            wynik.przdz[k++] = obecny;
         } else {
             przedz *ostatni = &wynik.przdz[k-1];
 
-            // jeśli cur.lewy <= last->prawy+Q to możemy przedłużyć ostatni przedział
+            // jeśli obecny.lewy <= last->prawy+Q to możemy przedłużyć ostatni przedział
             // zamiast dodawać nowy
-            if (cur.lewy <= ostatni->prawy + Q) {
-                ostatni->lewy = min(ostatni->lewy, cur.lewy);
-                ostatni->prawy = max(ostatni->prawy, cur.prawy);
+            if (obecny.lewy <= ostatni->prawy + Q) {
+                ostatni->lewy = min(ostatni->lewy, obecny.lewy);
+                ostatni->prawy = max(ostatni->prawy, obecny.prawy);
             } else {
-                wynik.przdz[k++] = cur;
+                wynik.przdz[k++] = obecny;
             }
         }
     }
 
     // dodajemy pozostałe przedziały ze zbioru A
     while (i < A.dlugosc) {
-        przedz cur = A.przdz[i];
+        przedz obecny = A.przdz[i];
         ++i;
 
         if (k == 0) {
-            wynik.przdz[k++] = cur;
+            wynik.przdz[k++] = obecny;
         } else {
             przedz *ostatni = &wynik.przdz[k-1];
 
-            // jeśli cur.lewy <= last->prawy+Q to możemy przedłużyć ostatni przedział
+            // jeśli obecny.lewy <= last->prawy+Q to możemy przedłużyć ostatni przedział
             // zamiast dodawać nowy
-            if (cur.lewy <= ostatni->prawy + Q) {
-                ostatni->lewy = min(ostatni->lewy, cur.lewy);
-                ostatni->prawy = max(ostatni->prawy, cur.prawy);
+            if (obecny.lewy <= ostatni->prawy + Q) {
+                ostatni->lewy = min(ostatni->lewy, obecny.lewy);
+                ostatni->prawy = max(ostatni->prawy, obecny.prawy);
             } else {
-                wynik.przdz[k++] = cur;
+                wynik.przdz[k++] = obecny;
             }
         }
     }
 
     // dodajemy pozostałe przedziały z B
     while (j < B.dlugosc) {
-        przedz cur = B.przdz[j];
+        przedz obecny = B.przdz[j];
         ++j;
 
         if (k == 0) {
-            wynik.przdz[k++] = cur;
+            wynik.przdz[k++] = obecny;
         } else {
             przedz *last = &wynik.przdz[k-1];
 
-            // jeśli cur.lewy <= last->prawy+Q to możemy przedłużyć ostatni przedział
+            // jeśli obecny.lewy <= last->prawy+Q to możemy przedłużyć ostatni przedział
             // zamiast dodawać nowy
-            if (cur.lewy <= last->prawy + Q) {
-                last->lewy = min(last->lewy, cur.lewy);
-                last->prawy = max(last->prawy, cur.prawy);
+            if (obecny.lewy <= last->prawy + Q) {
+                last->lewy = min(last->lewy, obecny.lewy);
+                last->prawy = max(last->prawy, obecny.prawy);
             } else {
-                wynik.przdz[k++] = cur;
+                wynik.przdz[k++] = obecny;
             }
         }
     }
@@ -150,7 +149,7 @@ zbior _suma(zbior A, zbior B) {
 // funkcja zwracająca sumę zbiorów A i B
 zbior_ary suma(zbior_ary A, zbior_ary B) {
     zbior_ary wynik;
-    wynik.ciag = malloc((unsigned)(A.dlugosc+B.dlugosc)*sizeof(zbior));
+    wynik.ciag = malloc((unsigned)(A.dlugosc + B.dlugosc)*sizeof(zbior));
 
     int i=0, j=0, k=0;
     while (i < A.dlugosc && j < B.dlugosc) {
@@ -291,7 +290,7 @@ zbior_ary iloczyn(zbior_ary A, zbior_ary B) {
     zbior_ary wynik;
     wynik.ciag = malloc((unsigned)(A.dlugosc+B.dlugosc)*sizeof(zbior));
 
-    int i=0, j=0, k=0;
+    int i = 0, j = 0, k = 0;
     while (i < A.dlugosc && j < B.dlugosc) {
         if (A.ciag[i].reszta < B.ciag[j].reszta) ++i;
         else if (A.ciag[i].reszta > B.ciag[j].reszta) ++j;
@@ -307,7 +306,7 @@ zbior_ary iloczyn(zbior_ary A, zbior_ary B) {
 // funkcja zwracająca true wtedy i tylko wtedy gdy element
 // x należy do zbioru A
 bool nalezy(zbior_ary A, int x) {
-    int x_reszta = x%Q, l=0, r=A.dlugosc-1;
+    int x_reszta = x % Q, l = 0, r = A.dlugosc - 1;
 
     // podzbiory A są posortowane rosnąco po redlugosctach z dzielenia
     // elementów, które trzymają więc możemy wykonać wydlugoscukiwanie binarne
@@ -317,13 +316,13 @@ bool nalezy(zbior_ary A, int x) {
         if (A.ciag[mid].reszta < x_reszta) l = mid + 1;
         else if (A.ciag[mid].reszta > x_reszta) r = mid - 1;
         else {
-            int l_intv = 0, r_intv = A.ciag[mid].dlugosc-1, ans = -1;
+            int l_intv = 0, r_intv = A.ciag[mid].dlugosc - 1, ans = -1;
 
             // gdy znaleźliśmy już indeks odpowiadający za podzbiór z redlugosctą x_reszta
             // musimy teraz znaleźć przedział (L, R) z najwiękdlugoscym L
             // mniejdlugoscym lub równym x co wykonamy przez wydlugoscukiwanie binarne
             while (l_intv <= r_intv) {
-                int mid_intv = (l_intv+r_intv)/2;
+                int mid_intv = (l_intv+r_intv) / 2;
 
                 if (A.ciag[mid].przdz[mid_intv].lewy <= x) ans = mid_intv, l_intv = mid_intv + 1;
                 else r_intv = mid_intv - 1;
