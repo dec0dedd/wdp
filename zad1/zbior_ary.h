@@ -7,8 +7,8 @@
 
 // struktura odpowiadająca z przedział elementów [left, right]
 typedef struct przedz {
-  int lewy;
-  int prawy;
+  long long lewy;
+  long long prawy;
 } przedz;
 
 
