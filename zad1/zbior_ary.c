@@ -7,11 +7,11 @@
 
 static long long Q;
 
-int min(int a, int b) {
+long long min(long long a, long long b) {
     return a <= b ? a : b;
 }
 
-int max(int a, int b) {
+long long max(long long a, long long b) {
     return a >= b ? a : b;
 }
 
@@ -20,7 +20,7 @@ zbior_ary ciag_arytmetyczny(int a, int q, int b) {
     Q = (long long)q;
 
     przedz prz;
-    prz.lewy = a, prz.prawy = b;
+    prz.lewy = (long long)a, prz.prawy = (long long)b;
 
     zbior zb;
     zb.przdz = malloc(sizeof(przedz));
@@ -47,8 +47,8 @@ unsigned moc(zbior_ary A) {
     // iterujemy sie po resztach z dzielenia przez Q podzbiorow ktore trzymamy
     // i dla kazdego przedzialu [L, R] dodajemy (R-L)/Q+1 do wynik poniewaz
     // w zbiorze {L, L+Q, L+2Q, ..., R} jest dokladnie (R-L)/Q+1 elementow
-    for (int i=0; i<A.dlugosc; ++i) {
-        for (int j=0; j<A.ciag[i].dlugosc; ++j) {
+    for (int i = 0; i < A.dlugosc; ++i) {
+        for (int j = 0; j < A.ciag[i].dlugosc; ++j) {
             ans += (unsigned)((A.ciag[i].przdz[j].prawy - A.ciag[i].przdz[j].lewy) / Q) + 1;
         }
     } 
@@ -60,7 +60,7 @@ unsigned moc(zbior_ary A) {
 unsigned ary(zbior_ary A) {
     unsigned ans = 0;
 
-    for (int i=0; i<A.dlugosc; ++i) {
+    for (int i = 0; i < A.dlugosc; ++i) {
         ans += (unsigned)(A.ciag[i].dlugosc);
     }
 
@@ -265,7 +265,7 @@ zbior_ary roznica(zbior_ary A, zbior_ary B) {
 // reszte z dzielenia przez Q
 zbior _iloczyn(zbior A, zbior B) {
     zbior wynik;
-    wynik.przdz = malloc((unsigned)(A.dlugosc+B.dlugosc)*sizeof(przedz));
+    wynik.przdz = malloc((unsigned)(A.dlugosc + B.dlugosc) * sizeof(przedz));
     wynik.reszta = A.reszta;
 
     int i = 0, j = 0, k = 0;
@@ -304,7 +304,7 @@ zbior _iloczyn(zbior A, zbior B) {
 // funkcja zwracajaca iloczyn zbiorów A i B
 zbior_ary iloczyn(zbior_ary A, zbior_ary B) {
     zbior_ary wynik;
-    wynik.ciag = malloc((unsigned)(A.dlugosc+B.dlugosc)*sizeof(zbior));
+    wynik.ciag = malloc((unsigned)(A.dlugosc + B.dlugosc) * sizeof(zbior));
 
     int i = 0, j = 0, k = 0;
     while (i < A.dlugosc && j < B.dlugosc) {
@@ -330,7 +330,7 @@ bool nalezy(zbior_ary A, int x) {
     // podzbiory A sa posortowane rosnaco po resztach z dzielenia
     // elementow, które trzymaja wiec mozemy wykonac wyszukiwanie binarne
     while (l <= r) {
-        int mid = (l+r)/2;
+        int mid = (l + r) / 2;
 
         if (A.ciag[mid].reszta < x_reszta) {
             l = mid + 1;
