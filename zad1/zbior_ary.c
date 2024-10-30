@@ -25,7 +25,7 @@ zbior_ary ciag_arytmetyczny(int a, int q, int b) {
     zbior zb;
     zb.przdz = malloc(sizeof(przedz));
     zb.przdz[0] = prz, zb.dlugosc = 1;
-    zb.reszta = a % Q;
+    zb.reszta = a % (int)Q;
 
     zbior_ary wynik;
     wynik.ciag = malloc(sizeof(zb));
@@ -37,7 +37,7 @@ zbior_ary ciag_arytmetyczny(int a, int q, int b) {
 
 // singleton to po prostu ciag arytmetyczny z jednym elementem
 zbior_ary singleton(int a) {
-    return ciag_arytmetyczny(a, Q, a);
+    return ciag_arytmetyczny(a, (int)Q, a);
 }
 
 // funkcja zwracajaca moc zbioru A
@@ -77,9 +77,6 @@ zbior _suma(zbior A, zbior B) {
 
     int i = 0, j = 0, k = 0;
     while (i < A.dlugosc || j < B.dlugosc) {
-        przedz a_prz = A.przdz[i];
-        przedz b_prz = B.przdz[j];
-
         przedz obecny;
 
         // wybieramy przedzial z lewym koncem bardziej wysunietym na lewo
@@ -325,7 +322,7 @@ zbior_ary iloczyn(zbior_ary A, zbior_ary B) {
 // funkcja zwracajaca true wtedy i tylko wtedy gdy element
 // x nalezy do zbioru A
 bool nalezy(zbior_ary A, int x) {
-    int x_reszta = x % Q, l = 0, r = A.dlugosc - 1;
+    int x_reszta = x % (int)Q, l = 0, r = A.dlugosc - 1;
 
     // podzbiory A sa posortowane rosnaco po resztach z dzielenia
     // elementow, które trzymaja wiec mozemy wykonac wyszukiwanie binarne
